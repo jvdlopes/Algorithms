@@ -9,30 +9,85 @@ package InsertRemove;
  *
  * @author john5790
  */
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+
 public class PeopleList extends javax.swing.JFrame {
 
     /**
      * Creates new form PeopleList
      */
+    ArrayList<Person> People = new ArrayList();
+    DefaultListModel list = new DefaultListModel();
+    
     public PeopleList() {
         initComponents();
-        /*
-        try{
-        Scanner s = new Scanner(new File("src/Sorting/studata.txt"));
-            for (int i = 0; i < 100; i++) {
-                String n = s.nextLine();
-                String a = s.nextLine();
-                int id = Integer.parseInt(s.nextLine());
-                stu[i] = new ISSStudent(n, a, id);
-                //add to list
-                model.add(i, stu[i].getName());
-            }
-        }catch (Exception e){
-            System.out.println(e);
+        People.add(new Person("Bob",25,"M"));
+        People.add(new Person("Fran",25,"F"));
+        People.add(new Person("Mike",25,"M"));
+        People.add(new Person("Sue",25,"F"));
+        lstPeople.setModel(list);
+        for (Person p : People) {
+            list.addElement(p.getName());
         }
-        */
+        
     }
 
+    public void clearForm(){
+        txtname.setText("");
+        txtage.setText("");
+        buttonGroup1.clearSelection();
+        lstPeople.clearSelection();
+    }
+    
+    public static int search(ArrayList a, Object searchValue) {
+        int left = 0;
+        int right = a.size() - 1;
+        while (left <= right) {
+            int midpoint = (left + right) / 2;
+            int result = ((Comparable) a.get(midpoint)).compareTo(searchValue);
+            if (result == 0) {
+                return midpoint;
+            } else if (result < 0) {
+                left = midpoint + 1;
+            } else {
+                right = midpoint - 1;
+            }
+        }
+        return -1;
+
+    }
+
+    public static int findInsertPoint(ArrayList a, Object searchValue) {
+        int left = 0;
+        int right = a.size() - 1;
+        int midpoint = 0;
+        int result = 0;
+
+        while (left <= right) {
+            midpoint = (left + right) / 2;
+            result = ((Comparable) a.get(midpoint)).compareTo(searchValue);
+
+            if (result < 0) {
+                left = midpoint + 1;
+            } else {
+                right = midpoint - 1;
+            }
+        }
+        if (result < 0) {
+            midpoint++;
+        }
+        return midpoint;
+    }
+    
+    public void show(Person p){
+        txtname.setText(p.getName());
+        txtage.setText("" + p.getAge());
+        if(p.getGender()=="M")
+            optmale.setSelected(true);
+        else
+            optfemale.setSelected(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,9 +138,21 @@ public class PeopleList extends javax.swing.JFrame {
 
         buttonGroup1.add(optmale);
         optmale.setText("Male");
+        optmale.setActionCommand("M");
+        optmale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optmaleActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(optfemale);
         optfemale.setText("Female");
+        optfemale.setActionCommand("F");
+        optfemale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optfemaleActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -103,7 +170,7 @@ public class PeopleList extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(optfemale)
                     .addComponent(optmale))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu3.setText("File");
@@ -123,6 +190,11 @@ public class PeopleList extends javax.swing.JFrame {
 
         mnuClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/InsertRemove/exit.png"))); // NOI18N
         mnuClear.setText("Clear");
+        mnuClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuClearActionPerformed(evt);
+            }
+        });
         jMenu4.add(mnuClear);
 
         mnuAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/InsertRemove/insert.png"))); // NOI18N
@@ -131,6 +203,11 @@ public class PeopleList extends javax.swing.JFrame {
 
         mnuDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/InsertRemove/delete.png"))); // NOI18N
         mnuDelete.setText("Delete");
+        mnuDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuDeleteActionPerformed(evt);
+            }
+        });
         jMenu4.add(mnuDelete);
 
         jMenuBar2.add(jMenu4);
@@ -205,8 +282,32 @@ public class PeopleList extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         //put code her for clicking on a name
-        
+        String name = "" + lstPeople.getSelectedValue();
+        int loc = search(People, new Person(name,0,""));
+        show(People.get(loc));
     }//GEN-LAST:event_lstPeopleMouseClicked
+
+    private void optmaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optmaleActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_optmaleActionPerformed
+
+    private void optfemaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optfemaleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_optfemaleActionPerformed
+
+    private void mnuClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuClearActionPerformed
+        // TODO add your handling code here:
+        clearForm();
+    }//GEN-LAST:event_mnuClearActionPerformed
+
+    private void mnuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDeleteActionPerformed
+        // TODO add your handling code here:
+        Person st = new Person(lstPeople.getSelectedValue(),0,"");
+        int loc = search(People, st);
+        People.remove(loc);
+        list.removeElementAt(lstPeople.getSelectedIndex());
+    }//GEN-LAST:event_mnuDeleteActionPerformed
 
     /**
      * @param args the command line arguments
