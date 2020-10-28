@@ -1,6 +1,7 @@
 
 package InsertRemove;
 
+import static InsertRemove.FruitExample1.logicalSize;
 import java.util.ArrayList;
 
 
@@ -24,10 +25,12 @@ public class FruitExampleArrayList {
         fruit.set(0, "Avacado");
         
         System.out.println("Adding Banana to location 1:");
-        fruit.add(1, "Banana");
+        int loc = findInsertPoint(fruit, "Banana");
+        fruit.add(loc, "Banana");
         
         System.out.println("Taking out Mango");
-        fruit.remove(3);
+        loc = fruit.indexOf("Mango");
+        fruit.remove(loc);
         
         System.out.println("-----------------");
         
@@ -36,4 +39,25 @@ public class FruitExampleArrayList {
         }
     }
     
+    public static int findInsertPoint(ArrayList a, Object searchValue) {
+        int left = 0;
+        int right = a.size() - 1;
+        int midpoint = 0;
+        int result = 0;
+
+        while (left <= right) {
+            midpoint = (left + right) / 2;
+            result = ((Comparable) a.get(midpoint)).compareTo(searchValue);
+
+            if (result < 0) {
+                left = midpoint + 1;
+            } else {
+                right = midpoint - 1;
+            }
+        }
+        if (result < 0) {
+            midpoint++;
+        }
+        return midpoint;
+    }
 }
