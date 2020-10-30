@@ -17,7 +17,7 @@ public class SortingProject extends javax.swing.JFrame {
     /**
      * Creates new form SortingProject
      */
-    
+    long time;
     DefaultListModel list = new DefaultListModel();
     int nums[] = new int[50000];
     public SortingProject() {
@@ -40,6 +40,32 @@ public class SortingProject extends javax.swing.JFrame {
     public long getTime(){
         return System.currentTimeMillis();
     }
+    
+    public static void bubbleSort(int[] a){
+   	int k = 0;
+   	boolean exchangeMade = true;
+	// Make up to n - 1 passes through array, exit 
+	//early if no exchanges are made on previous pass
+  
+ 	while ((k < a.length - 1) && exchangeMade){
+      		exchangeMade = false;
+      		k++;
+      		for (int j = 0; j < a.length - k; j++) { 
+         		if (a[j] > a[j + 1]){
+            			swap(a, j, j + 1);		 
+            			exchangeMade = true;
+         		}//end if
+		}//end for
+	}//end while
+}
+
+//supporting swap method
+
+public static void swap(int[] a, int x, int y){
+   int temp = a[x];
+   a[x] = a[y];
+   a[y] = temp;
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,7 +77,7 @@ public class SortingProject extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         NumList = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        btnGenerate = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnButton = new javax.swing.JButton();
         btnSelection = new javax.swing.JButton();
@@ -69,16 +95,21 @@ public class SortingProject extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(NumList);
 
-        jButton1.setText("Generate Numbers");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGenerate.setText("Generate Numbers");
+        btnGenerate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGenerateActionPerformed(evt);
             }
         });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnButton.setText("Bubble Sort");
+        btnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnButtonActionPerformed(evt);
+            }
+        });
 
         btnSelection.setText("Selection Sort");
 
@@ -199,13 +230,13 @@ public class SortingProject extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                        .addComponent(btnGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(lblTime))
                 .addGap(22, 22, 22))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jPanel1, jPanel2, lblTime});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnGenerate, jPanel1, jPanel2, lblTime});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +246,7 @@ public class SortingProject extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(jButton1)
+                .addComponent(btnGenerate)
                 .addGap(18, 18, 18)
                 .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -240,15 +271,26 @@ public class SortingProject extends javax.swing.JFrame {
         clearForm();
     }//GEN-LAST:event_btnClearActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateActionPerformed
         // TODO add your handling code here:
         //clearForm();
         fillData();
         for (int i = 0; i < nums.length; i++) {
             list.addElement(nums[i]);
         }
-        System.out.println(nums[20]);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnGenerateActionPerformed
+
+    private void btnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnButtonActionPerformed
+        // TODO add your handling code here:
+        time = getTime();
+        clearForm();
+        bubbleSort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            list.addElement(nums[i]);
+        }
+        time = (getTime()) - time;
+        lblTime.setText("" + time + "ms");
+    }//GEN-LAST:event_btnButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -290,9 +332,9 @@ public class SortingProject extends javax.swing.JFrame {
     private javax.swing.JButton btnButton;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnGenerate;
     private javax.swing.JButton btnQuick;
     private javax.swing.JButton btnSelection;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
