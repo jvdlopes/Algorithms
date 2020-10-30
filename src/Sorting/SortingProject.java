@@ -33,7 +33,7 @@ public class SortingProject extends javax.swing.JFrame {
     }
 
     public void clearForm(){
-        NumList.clearSelection();
+        list.clear();
         lblTime.setText("");
     }
     
@@ -237,11 +237,12 @@ public class SortingProject extends javax.swing.JFrame {
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
+        clearForm();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        clearForm();
+        //clearForm();
         fillData();
         for (int i = 0; i < nums.length; i++) {
             list.addElement(nums[i]);

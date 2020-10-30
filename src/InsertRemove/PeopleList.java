@@ -11,6 +11,7 @@ package InsertRemove;
  */
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class PeopleList extends javax.swing.JFrame {
 
@@ -19,27 +20,27 @@ public class PeopleList extends javax.swing.JFrame {
      */
     ArrayList<Person> People = new ArrayList();
     DefaultListModel list = new DefaultListModel();
-    
+
     public PeopleList() {
         initComponents();
-        People.add(new Person("Bob",25,"M"));
-        People.add(new Person("Fran",25,"F"));
-        People.add(new Person("Mike",25,"M"));
-        People.add(new Person("Sue",25,"F"));
+        People.add(new Person("Bob", 25, "M"));
+        People.add(new Person("Fran", 55, "F"));
+        People.add(new Person("Mike", 15, "M"));
+        People.add(new Person("Sue", 30, "F"));
         lstPeople.setModel(list);
         for (Person p : People) {
             list.addElement(p.getName());
         }
-        
+
     }
 
-    public void clearForm(){
+    public void clearForm() {
         txtname.setText("");
         txtage.setText("");
         buttonGroup1.clearSelection();
         lstPeople.clearSelection();
     }
-    
+
     public static int search(ArrayList a, Object searchValue) {
         int left = 0;
         int right = a.size() - 1;
@@ -79,15 +80,17 @@ public class PeopleList extends javax.swing.JFrame {
         }
         return midpoint;
     }
-    
-    public void show(Person p){
+
+    public void show(Person p) {
         txtname.setText(p.getName());
         txtage.setText("" + p.getAge());
-        if(p.getGender()=="M")
+        if (p.getGender() == "M") {
             optmale.setSelected(true);
-        else
+        } else {
             optfemale.setSelected(true);
+        }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,8 +134,6 @@ public class PeopleList extends javax.swing.JFrame {
         jLabel1.setText("Name: ");
 
         jLabel2.setText("Age:");
-
-        txtage.setText(" ");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -196,6 +197,11 @@ public class PeopleList extends javax.swing.JFrame {
         jMenu4.add(mnuClear);
 
         mnuAdd.setText("Add");
+        mnuAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuAddActionPerformed(evt);
+            }
+        });
         jMenu4.add(mnuAdd);
 
         mnuDelete.setText("Delete");
@@ -211,12 +217,27 @@ public class PeopleList extends javax.swing.JFrame {
         jMenu6.setText("Filter");
 
         mnuAll.setText("Show All");
+        mnuAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuAllActionPerformed(evt);
+            }
+        });
         jMenu6.add(mnuAll);
 
         mnuFemale.setText("Female");
+        mnuFemale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuFemaleActionPerformed(evt);
+            }
+        });
         jMenu6.add(mnuFemale);
 
         mnuMale.setText("Male");
+        mnuMale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuMaleActionPerformed(evt);
+            }
+        });
         jMenu6.add(mnuMale);
 
         jMenuBar2.add(jMenu6);
@@ -273,16 +294,16 @@ public class PeopleList extends javax.swing.JFrame {
 
     private void lstPeopleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstPeopleMouseClicked
         // TODO add your handling code here:
-        
+
         //put code her for clicking on a name
         String name = "" + lstPeople.getSelectedValue();
-        int loc = search(People, new Person(name,0,""));
+        int loc = search(People, new Person(name, 0, ""));
         show(People.get(loc));
     }//GEN-LAST:event_lstPeopleMouseClicked
 
     private void optmaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optmaleActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_optmaleActionPerformed
 
     private void optfemaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optfemaleActionPerformed
@@ -296,11 +317,60 @@ public class PeopleList extends javax.swing.JFrame {
 
     private void mnuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDeleteActionPerformed
         // TODO add your handling code here:
-        Person st = new Person(lstPeople.getSelectedValue(),0,"");
+        Person st = new Person(lstPeople.getSelectedValue(), 0, "");
         int loc = search(People, st);
         People.remove(loc);
         list.removeElementAt(lstPeople.getSelectedIndex());
+        clearForm();
     }//GEN-LAST:event_mnuDeleteActionPerformed
+
+    private void mnuAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAddActionPerformed
+        // TODO add your handling code here:
+        Person temp;
+        String gender, nm;
+        int age;
+
+        nm = txtname.getText();
+        age = Integer.parseInt(txtage.getText());
+        gender = buttonGroup1.getSelection().getActionCommand();
+
+        temp = new Person(nm, age, gender);
+        int loc = search(People, temp);
+        if (loc == -1){
+            loc = findInsertPoint(People, temp);
+            People.add(loc, temp);
+            list.add(loc, temp.getName());
+        }
+        else
+            JOptionPane.showMessageDialog(this, "Must be a new person");
+        clearForm();
+    }//GEN-LAST:event_mnuAddActionPerformed
+
+    private void mnuFemaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFemaleActionPerformed
+        // TODO add your handling code here:
+        list.clear();
+        for (Person p : People) {
+            if(p.getGender() == "F")
+                list.addElement(p.getName());
+        }
+    }//GEN-LAST:event_mnuFemaleActionPerformed
+
+    private void mnuMaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMaleActionPerformed
+        // TODO add your handling code here:
+        list.clear();
+        for (Person p : People) {
+            if(p.getGender() == "M")
+                list.addElement(p.getName());
+        }
+    }//GEN-LAST:event_mnuMaleActionPerformed
+
+    private void mnuAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAllActionPerformed
+        // TODO add your handling code here:
+        list.clear();
+        for (Person p : People) {
+            list.addElement(p.getName());
+        }
+    }//GEN-LAST:event_mnuAllActionPerformed
 
     /**
      * @param args the command line arguments
