@@ -175,7 +175,6 @@ public class PeopleList extends javax.swing.JFrame {
 
         jMenu3.setText("File");
 
-        mnuExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/InsertRemove/exit.png"))); // NOI18N
         mnuExit.setText("Exit");
         mnuExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,7 +187,6 @@ public class PeopleList extends javax.swing.JFrame {
 
         jMenu4.setText("Edit");
 
-        mnuClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/InsertRemove/exit.png"))); // NOI18N
         mnuClear.setText("Clear");
         mnuClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,11 +195,9 @@ public class PeopleList extends javax.swing.JFrame {
         });
         jMenu4.add(mnuClear);
 
-        mnuAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/InsertRemove/insert.png"))); // NOI18N
         mnuAdd.setText("Add");
         jMenu4.add(mnuAdd);
 
-        mnuDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/InsertRemove/delete.png"))); // NOI18N
         mnuDelete.setText("Delete");
         mnuDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,15 +210,12 @@ public class PeopleList extends javax.swing.JFrame {
 
         jMenu6.setText("Filter");
 
-        mnuAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/InsertRemove/all.png"))); // NOI18N
         mnuAll.setText("Show All");
         jMenu6.add(mnuAll);
 
-        mnuFemale.setIcon(new javax.swing.ImageIcon(getClass().getResource("/InsertRemove/female.png"))); // NOI18N
         mnuFemale.setText("Female");
         jMenu6.add(mnuFemale);
 
-        mnuMale.setIcon(new javax.swing.ImageIcon(getClass().getResource("/InsertRemove/male.png"))); // NOI18N
         mnuMale.setText("Male");
         jMenu6.add(mnuMale);
 
