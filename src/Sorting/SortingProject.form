@@ -106,9 +106,9 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="btnButton" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBubble" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSelection" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton4" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnInsertion" linkSize="1" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="23" max="32767" attributes="0"/>
@@ -120,39 +120,45 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btnButton" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnBubble" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnSelection" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnInsertion" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btnButton">
+        <Component class="javax.swing.JButton" name="btnBubble">
           <Properties>
             <Property name="text" type="java.lang.String" value="Bubble Sort"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBubbleActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSelection">
           <Properties>
             <Property name="text" type="java.lang.String" value="Selection Sort"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelectionActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sorting Algorithms"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="btnInsertion">
           <Properties>
             <Property name="text" type="java.lang.String" value="Insertion Sort"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInsertionActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -204,6 +210,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Quick Sort"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQuickActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

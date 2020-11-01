@@ -59,12 +59,81 @@ public class SortingProject extends javax.swing.JFrame {
 	}//end while
 }
 
+    public static void selectionSort(int[] a){
+   for (int i = 0; i < a.length - 1; i++){
+      int minIndex = findMinimum(a, i);
+      if (minIndex != i)
+	//if lowest is not already in place
+         swap(a, i, minIndex);
+   } //end for
+}  
+
+//supporting findMinimum method
+
+public static int findMinimum(int[] a, int first){
+   //first=where to start looking from
+   //assume first is also the smallest for now
+   int minIndex = first; 
+   for (int i = first + 1; i < a.length; i++)
+      if (a[i] < a[minIndex])
+         minIndex = i;
+   return minIndex;
+}
+    
 //supporting swap method
 
 public static void swap(int[] a, int x, int y){
    int temp = a[x];
    a[x] = a[y];
    a[y] = temp;
+}
+
+public static void insertionSort(int a[]){
+	int itemToInsert, j;
+	boolean stillLooking;
+
+	//on the kth pass, pass item k upwards in list
+	//and insert it in its proper place amoung the
+	//first k entries in an array
+
+	for (int k=1; k<a.length; k++){
+	//move backwards through list, looking for
+	//the right place to insert a[k];
+		itemToInsert = a[k];
+		j=k-1;
+		stillLooking=true;
+		while(j >=0 && stillLooking){
+			if (itemToInsert < a[j]){
+				//move item higher
+				a[j+1] = a[j];
+				j--;
+			}else{
+				//we have found new home for a[k];
+				stillLooking=false;
+			}//end else// j+1 is where the item goes
+			a[j+1]=itemToInsert;
+		}//end while
+  	}//end for
+}//end method
+
+public void quickSort (int[] a, int left, int right){
+    if (left >= right)  return;
+    int i = left;
+    int j = right;
+    int pivotValue = a[(left + right) / 2];
+    while (i < j){
+        while (a[i] < pivotValue) i++;
+        while (pivotValue < a[j]) j--;
+        if (i <= j){
+            int temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+            i++;
+            j--;
+        }
+    }
+    quickSort(a, left, j);
+    quickSort (a, i, right);
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,10 +148,10 @@ public static void swap(int[] a, int x, int y){
         NumList = new javax.swing.JList<>();
         btnGenerate = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        btnButton = new javax.swing.JButton();
+        btnBubble = new javax.swing.JButton();
         btnSelection = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btnInsertion = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btnQuick = new javax.swing.JButton();
@@ -104,18 +173,28 @@ public static void swap(int[] a, int x, int y){
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnButton.setText("Bubble Sort");
-        btnButton.addActionListener(new java.awt.event.ActionListener() {
+        btnBubble.setText("Bubble Sort");
+        btnBubble.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnButtonActionPerformed(evt);
+                btnBubbleActionPerformed(evt);
             }
         });
 
         btnSelection.setText("Selection Sort");
+        btnSelection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectionActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Sorting Algorithms");
 
-        jButton4.setText("Insertion Sort");
+        btnInsertion.setText("Insertion Sort");
+        btnInsertion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -124,25 +203,25 @@ public static void swap(int[] a, int x, int y){
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnButton)
+                    .addComponent(btnBubble)
                     .addComponent(btnSelection)
-                    .addComponent(jButton4)
+                    .addComponent(btnInsertion)
                     .addComponent(jLabel1))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnButton, btnSelection, jButton4});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnBubble, btnInsertion, btnSelection});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnButton)
+                .addComponent(btnBubble)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSelection)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
+                .addComponent(btnInsertion)
                 .addGap(0, 14, Short.MAX_VALUE))
         );
 
@@ -151,6 +230,11 @@ public static void swap(int[] a, int x, int y){
         jLabel2.setText("Recursion");
 
         btnQuick.setText("Quick Sort");
+        btnQuick.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuickActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -280,7 +364,7 @@ public static void swap(int[] a, int x, int y){
         }
     }//GEN-LAST:event_btnGenerateActionPerformed
 
-    private void btnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnButtonActionPerformed
+    private void btnBubbleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBubbleActionPerformed
         // TODO add your handling code here:
         time = getTime();
         clearForm();
@@ -290,7 +374,43 @@ public static void swap(int[] a, int x, int y){
         }
         time = (getTime()) - time;
         lblTime.setText("" + time + "ms");
-    }//GEN-LAST:event_btnButtonActionPerformed
+    }//GEN-LAST:event_btnBubbleActionPerformed
+
+    private void btnSelectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectionActionPerformed
+        // TODO add your handling code here:
+        time = getTime();
+        clearForm();
+        selectionSort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            list.addElement(nums[i]);
+        }
+        time = (getTime()) - time;
+        lblTime.setText("" + time + "ms");
+    }//GEN-LAST:event_btnSelectionActionPerformed
+
+    private void btnInsertionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertionActionPerformed
+        // TODO add your handling code here:
+        time = getTime();
+        clearForm();
+        insertionSort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            list.addElement(nums[i]);
+        }
+        time = (getTime()) - time;
+        lblTime.setText("" + time + "ms");
+    }//GEN-LAST:event_btnInsertionActionPerformed
+
+    private void btnQuickActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuickActionPerformed
+        // TODO add your handling code here:
+        time = getTime();
+        clearForm();
+        //quickSort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            list.addElement(nums[i]);
+        }
+        time = (getTime()) - time;
+        lblTime.setText("" + time + "ms");
+    }//GEN-LAST:event_btnQuickActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,13 +449,13 @@ public static void swap(int[] a, int x, int y){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> NumList;
-    private javax.swing.JButton btnButton;
+    private javax.swing.JButton btnBubble;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnGenerate;
+    private javax.swing.JButton btnInsertion;
     private javax.swing.JButton btnQuick;
     private javax.swing.JButton btnSelection;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
