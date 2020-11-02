@@ -17,11 +17,12 @@ public class SearchProject extends javax.swing.JFrame {
     /**
      * Creates new form SearchProject
      */
+    ISSStudent iss[] = new ISSStudent[100];
+    
     public SearchProject() {
         initComponents();
         String name, add;
         int id;
-        ISSStudent iss[] = new ISSStudent[100];
         try{
             Scanner scan = new Scanner(new File("src/Searching/studata.txt"));
             for (int i = 0; i < 100; i++) {
@@ -62,14 +63,14 @@ public class SearchProject extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        display = new javax.swing.JList<>();
         btnSearch = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         txtid = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(display);
 
         btnSearch.setText("Search");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -115,6 +116,13 @@ public class SearchProject extends javax.swing.JFrame {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
+        int id = Integer.parseInt(txtid.getText());
+        ISSStudent temp = new ISSStudent(null, null, id);
+        int result = search(iss,temp); // 
+        if(result >=0) //matching location
+            display.setText(iss[result].toString());
+        else
+            display.setText("Student not found");
     }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
@@ -155,7 +163,7 @@ public class SearchProject extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> display;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtid;
     // End of variables declaration//GEN-END:variables
