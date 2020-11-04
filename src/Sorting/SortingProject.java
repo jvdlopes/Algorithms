@@ -404,7 +404,7 @@ public void quickSort (int[] a, int left, int right){
         // TODO add your handling code here:
         time = getTime();
         clearForm();
-        //quickSort(nums);
+        quickSort(nums, 0, nums.length-1);
         for (int i = 0; i < nums.length; i++) {
             list.addElement(nums[i]);
         }
